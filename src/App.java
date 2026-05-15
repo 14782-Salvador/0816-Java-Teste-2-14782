@@ -724,7 +724,7 @@ public class App {
      
      
      
-        //// LISTA
+        //// LISTA_ANIMAL
         server.createContext("/animaislista", exchange -> {
 
             StringBuilder html = new StringBuilder();
@@ -763,7 +763,7 @@ public class App {
 
             try {
                 Statement st = con.createStatement();
-                ResultSet rs = st.executeQuery("SELECT * FROM clientes");
+                ResultSet rs = st.executeQuery("SELECT * FROM Animais");
 
                 while (rs.next()) {
                     int id = rs.getInt("id");
@@ -779,9 +779,9 @@ public class App {
                     html.append("<td>").append(dataNascimento).append("</td>");
 
                     html.append("<td>");
-                    html.append("<a href='/editar?id=").append(id).append("'>Editar</a>");
+                    html.append("<a href='/editar?id=").append(id).append("'>editar</a>");
                     html.append("<a href='/apagar?id=").append(id)
-                        .append("' onclick=\"return confirm('Eliminar cliente?')\">Apagar</a>");
+                        .append("' onclick=\"return confirm('Eliminar cliente?')\">apagar </a>");
                     html.append("</td>");
 
                     html.append("</tr>");
@@ -821,7 +821,7 @@ public class App {
 
 
 
-        // FORM NOVO CLIENTE
+        // FORM NOVO ANIMAL
         server.createContext("/animaisnovo", exchange -> {
 
             StringBuilder html = new StringBuilder();
@@ -840,11 +840,11 @@ public class App {
                 </head>
                 <body>
 
-                <h2>Novo Cliente</h2>
+                <h2>Novo Animais</h2>
 
                 <a href='/Animais'>← Voltar à lista</a><br><br>
 
-                <form method='POST' action='/guardar'>
+                <form method='POST' action='/animaisguardar '>
                     numeroCA:
                     <input name='numeroCA' required>
 
@@ -852,7 +852,7 @@ public class App {
                     <input name='nomeAnimal' required>
 
                     dataNascimento:
-                    <input name='dataNascimento' type='email' required>
+                    <input name='dataNascimento' required>
 
                     <button type='submit'>Guardar</button>
                 </form>
@@ -879,7 +879,7 @@ public class App {
 
 
 
-       // GUARDAR NOVO CLIENTE
+       // GUARDAR NOVO ANIMAL
         server.createContext("/animaisguardar", exchange -> {
 
             if (!exchange.getRequestMethod().equalsIgnoreCase("POST")) {
@@ -921,7 +921,7 @@ public class App {
                     throw new Exception("Ligação à BD falhou!");
                 }
 
-                String sql = "INSERT INTO clientes(numeroCA,nomeAnimal,dataNascimento) VALUES (?,?,?)";
+                String sql = "INSERT INTO Animais(numeroCA,nomeAnimal,dataNascimento) VALUES (?,?,?)";
                 PreparedStatement ps = con.prepareStatement(sql);
 
                 ps.setString(1, numeroCA);
@@ -945,10 +945,10 @@ public class App {
                     </head>
                     <body>
 
-                    <h2>:-) Cliente guardado com sucesso!</h2>
+                    <h2>:-) Animal guardado com sucesso!</h2>
 
-                    <a href='/clientes'>Ver lista</a><br><br>
-                    <a href='/novo'>Inserir novo cliente</a>
+                    <a href='/Animais'>Ver lista</a><br><br>
+                    <a href='/novo'>Inserir novo Animal</a>
 
                     </body>
                     </html>
@@ -964,7 +964,7 @@ public class App {
                     </head>
                     <body>
 
-                    <h2>!! Erro ao guardar cliente!</h2>
+                    <h2>!! Erro ao guardar Animal!</h2>
                     <a href='/novo'>Voltar</a>
 
                     </body>
@@ -993,7 +993,7 @@ public class App {
 
 
 
-        // FORM EDITAR
+        // FORM ANIMAL
         server.createContext("/animaiseditar", exchange -> {
 
             StringBuilder html = new StringBuilder();
@@ -1041,16 +1041,16 @@ public class App {
 
                     <h2>Editar Cliente</h2>
 
-                    <a href='/clientes'>« Voltar</a><br><br>
+                    <a href='/Animais'>« Voltar</a><br><br>
 
-                    <form method='POST' action='/atualizar'>
+                    <form method='POST' action='/animaisatualizar'>
                 """);
 
                 html.append("<input type='hidden' name='id' value='").append(id).append("'>");
 
-                html.append("Nome:<input name='nome' value='").append(numeroCA).append("' required>");
-                html.append("Email:<input name='email' value='").append(nomeAnimal).append("' required>");
-                html.append("Telefone:<input name='telefone' value='").append(dataNascimento).append("'>");
+                html.append("Nome:<input name='numeroCA' value='").append(numeroCA).append("' required>");
+                html.append("Email:<input name='nomeAnimal' value='").append(nomeAnimal).append("' required>");
+                html.append("Telefone:<input name='dataNascimento' value='").append(dataNascimento).append("'>");
 
                 html.append("""
                     <button type='submit'>Atualizar</button>
@@ -1070,8 +1070,8 @@ public class App {
                 html.append("""
                     <html>
                     <body>
-                    <h2>!Erro ao carregar cliente</h2>
-                    <a href='/clientes'>Voltar</a>
+                    <h2>!Erro ao carregar Animais</h2>
+                    <a href='/Animais'>Voltar</a>
                     </body>
                     </html>
                 """);
@@ -1099,7 +1099,7 @@ public class App {
 
 
 
-        // ATUALIZAR CLIENTE 
+        // ATUALIZAR ANIMAL 
         server.createContext("/animaisatualizar", exchange -> {
 
             if (!exchange.getRequestMethod().equalsIgnoreCase("POST")) {
@@ -1189,7 +1189,7 @@ public class App {
 
 
         
-        // ELIMINAR CLIENTE
+        // ELIMINAR ANIMAL
         server.createContext("/animaisapagar", exchange -> {
 
             StringBuilder html = new StringBuilder();
